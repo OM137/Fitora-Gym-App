@@ -1,26 +1,32 @@
-# My App
+# FITORA
 
-An app built with [Builder.io](https://www.builder.io) on the
-[Agent-Native](https://agent-native.com?utm_source=github&utm_medium=referral&utm_content=fusion-starter-readme) framework. Replace this paragraph with
-what the app does and who it's for.
+FITORA is a fitness tracking app for workouts, meals, activity, member profiles, and gym communities. It is built with React Router, Vite, and the Agent-Native framework.
 
-## Develop locally
+## Run locally
+
+Requirements: Node.js 22.22 or newer and pnpm 10.14 (the repository's `packageManager` field lets Corepack select pnpm).
 
 ```bash
-cp .env.example .env
 corepack enable
-pnpm install
+pnpm install --frozen-lockfile
+cp .env.example .env
 pnpm dev
 ```
 
-`.env.example` sets `AUTH_DISABLED=true` as a commented-out option; uncomment it
-to skip sign-in while developing.
+For local development without sign-in, set `AUTH_DISABLED=true` in `.env`. Do not set this in production.
+
+## Production deployment
+
+The root `render.yaml` configures a Render web service and managed PostgreSQL database. Apply it from the Render Blueprint dashboard after connecting this GitHub repository. It configures a generated `BETTER_AUTH_SECRET`, injects the database URL, applies production migrations before each deploy, and starts the app with `pnpm start`.
+
+The Blueprint uses paid Render plans. Review the selected service and database plans and available credits in Render before applying; usage can be billed after credits are exhausted. Keep all secrets in Render environment settings, never in Git.
 
 ## Project layout
 
 - `app/`: routes and UI components
-- `actions/`: operations shared by the UI and the app's agent
-- `server/`: server plugins and the database client
-- `drizzle/`: schema and migrations; start with `drizzle/START_HERE.md`
+- `actions/`: operations used by the UI
+- `server/`: server plugins and database client
+- `drizzle/`: PostgreSQL schema and migrations
+- `render.yaml`: Render service and database configuration
 
-Framework docs: [agent-native.com/docs](https://agent-native.com/docs?utm_source=github&utm_medium=referral&utm_content=fusion-starter-readme).
+Run `pnpm typecheck` and `pnpm build` to verify the app locally.
